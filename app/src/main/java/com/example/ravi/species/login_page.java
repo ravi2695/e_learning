@@ -72,8 +72,7 @@ public class login_page extends AppCompatActivity {
                             loginProgressbar.setVisibility(View.GONE);
                             if(task.isSuccessful())
                             {
-                                //change this activity to our timeline
-                                Toast.makeText(login_page.this,"changed to next activity",Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(login_page.this,Timeline.class));
                             }
                             else
                             {
