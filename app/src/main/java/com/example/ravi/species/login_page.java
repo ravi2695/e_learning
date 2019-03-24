@@ -17,14 +17,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class login_page extends AppCompatActivity {
+public class login_page extends AppCompatActivity implements forgetPasswordDialogue.DialogueListener{
 
     EditText loginEmail;
     EditText loginPassword;
     TextView registeringtextView;
     Button loginButton;
     ProgressBar loginProgressbar;
-
+    TextView forgetPassword;
     FirebaseAuth loginFirebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +36,16 @@ public class login_page extends AppCompatActivity {
         loginButton=findViewById(R.id.loginbutton);
         registeringtextView=findViewById(R.id.registering);
         loginProgressbar=findViewById(R.id.loginprogressbar);
+        forgetPassword=findViewById(R.id.forgetpassword);
 
         loginFirebaseAuth=FirebaseAuth.getInstance();
+
+        forgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialogue();
+            }
+        });
 
             registeringtextView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -83,5 +91,30 @@ public class login_page extends AppCompatActivity {
                 }
             });
 
+    }
+
+    private void openDialogue() {
+        forgetPasswordDialogue emailForgetDialogue=new forgetPasswordDialogue();
+        emailForgetDialogue.show(getSupportFragmentManager(),"example");
+    }
+
+    @Override
+    public void applyChanges(String getForgotEmail) {
+
+        loginFirebaseAuth.sendPasswordResetEmail(getForgotEmail)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+
+                                if(task.isSuccessful())
+                                {
+                                    Toast.makeText(login_page.this,"check your email for link",Toast.LENGTH_LONG).show();
+                                }
+                                else
+                                {
+                                    Toast.makeText(login_page.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
     }
 }

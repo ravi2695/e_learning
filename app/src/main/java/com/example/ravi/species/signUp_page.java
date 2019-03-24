@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,6 +23,7 @@ public class signUp_page extends AppCompatActivity {
     EditText passwordEditText;
     ProgressBar progressBarLoading;
     FirebaseAuth firebaseAuth;
+    TextView moving_to_login_page;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,9 +33,17 @@ public class signUp_page extends AppCompatActivity {
         emailEditText=findViewById(R.id.email);
         passwordEditText=findViewById(R.id.password);
         progressBarLoading=findViewById(R.id.progressBar);
+        moving_to_login_page=findViewById(R.id.moveToLoginPage);
 
         firebaseAuth=FirebaseAuth.getInstance();
 
+
+        moving_to_login_page.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(signUp_page.this,login_page.class));
+            }
+        });
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
