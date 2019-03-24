@@ -104,7 +104,6 @@ public class login_page extends AppCompatActivity implements forgetPasswordDialo
         forgetPasswordDialogue emailForgetDialogue=new forgetPasswordDialogue();
         emailForgetDialogue.show(getSupportFragmentManager(),"example");
     }
-
     @Override
     public void applyChanges(String getForgotEmail) {
 

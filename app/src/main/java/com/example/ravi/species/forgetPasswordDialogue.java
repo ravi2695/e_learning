@@ -44,6 +44,7 @@ public class forgetPasswordDialogue extends AppCompatDialogFragment {
                         }
                         dialogueListener.applyChanges(forgetEmail.getText().toString().trim());
 
+
                     }
 
                 });
@@ -51,7 +52,6 @@ public class forgetPasswordDialogue extends AppCompatDialogFragment {
 
         return builder.create();
     }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
