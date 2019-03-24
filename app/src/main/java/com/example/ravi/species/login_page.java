@@ -80,7 +80,14 @@ public class login_page extends AppCompatActivity implements forgetPasswordDialo
                             loginProgressbar.setVisibility(View.GONE);
                             if(task.isSuccessful())
                             {
-                                startActivity(new Intent(login_page.this,Timeline.class));
+                                if(loginFirebaseAuth.getCurrentUser().isEmailVerified())
+                                {
+                                    startActivity(new Intent(login_page.this,Timeline.class));
+                                }
+                                else
+                                {
+                                    Toast.makeText(login_page.this,"please verify your email or try with different account",Toast.LENGTH_LONG).show();
+                                }
                             }
                             else
                             {

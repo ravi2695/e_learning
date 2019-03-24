@@ -14,7 +14,7 @@ public class sameActivity extends Application{
         FirebaseAuth samefirebaseAuth=FirebaseAuth.getInstance();
         FirebaseUser samefirebaseUser=samefirebaseAuth.getCurrentUser();
 
-        if(samefirebaseUser!=null)
+        if(samefirebaseUser!=null && samefirebaseUser.isEmailVerified())
         {
             Intent intent=new Intent(sameActivity.this,Timeline.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

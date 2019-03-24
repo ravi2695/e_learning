@@ -61,8 +61,9 @@ public class signUp_page extends AppCompatActivity {
                     passwordEditText.requestFocus();
                     return;
                 }
-
                 progressBarLoading.setVisibility(View.VISIBLE);
+
+
                 firebaseAuth.createUserWithEmailAndPassword(emailEditText.getText().toString().trim(),passwordEditText.getText().toString().trim())
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -72,10 +73,25 @@ public class signUp_page extends AppCompatActivity {
                         progressBarLoading.setVisibility(View.GONE);
                         if(task.isSuccessful())
                         {
-                            Toast.makeText(signUp_page.this,"registration successfully completed",Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(signUp_page.this,login_page.class));
-                            emailEditText.setText("");
-                            passwordEditText.setText("");
+                            firebaseAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+
+                                    if(task.isSuccessful())
+                                    {
+                                        Toast.makeText(signUp_page.this,"registration successfull\nkindly check your email for verification",Toast.LENGTH_LONG).show();
+                                        startActivity(new Intent(signUp_page.this,login_page.class));
+                                        emailEditText.setText("");
+                                        passwordEditText.setText("");
+                                    }
+                                    else
+                                    {
+                                        Toast.makeText(signUp_page.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+
+
                         }
                         else
                         {
