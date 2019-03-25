@@ -6,22 +6,36 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
+import com.example.ravi.species.Interface.ItemClickListener;
+import com.example.ravi.species.ViewHolder.MenuViewHolder;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
-import java.sql.Time;
 
 public class Timeline extends AppCompatActivity {
 
     FirebaseAuth timeLine_firebaseAuth;
     FirebaseUser timeLine_firebaseUser;
+    FirebaseDatabase database;
+    DatabaseReference category;
+
+    RecyclerView recycler_menu;
+    RecyclerView.LayoutManager layoutManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +44,43 @@ public class Timeline extends AppCompatActivity {
 
         timeLine_firebaseAuth=FirebaseAuth.getInstance();
         timeLine_firebaseUser=timeLine_firebaseAuth.getCurrentUser();
+
+        database=FirebaseDatabase.getInstance();
+        category=database.getReference("Category");
+
+
+        //loading menu
+        recycler_menu = (RecyclerView)findViewById(R.id.recyler_menu);
+        recycler_menu.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recycler_menu.setLayoutManager(layoutManager);
+        
+        loadmenu();
     }
+
+    private void loadmenu() {
+
+        FirebaseRecyclerAdapter<Category,MenuViewHolder> adapter=new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class,R.layout.menu_item,MenuViewHolder.class,category) {
+             @Override
+            protected void populateViewHolder(MenuViewHolder viewHolder, Category model, int position) {
+
+                viewHolder.txtMenuName.setText(model.getName());
+                Picasso.with(getBaseContext()).load(model.getImage())
+                        .into(viewHolder.imageView);
+
+                final Category clickItem=model;
+                viewHolder.setItemClickListener(new ItemClickListener() {
+                    @Override
+                    public void onClick(View view, int position, boolean isLongClick) {
+                        Toast.makeText(Timeline.this,clickItem.getName(),Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        };
+        recycler_menu.setAdapter(adapter);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater=getMenuInflater();
