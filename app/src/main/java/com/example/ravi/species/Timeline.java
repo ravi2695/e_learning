@@ -36,6 +36,7 @@ public class Timeline extends AppCompatActivity {
     RecyclerView recycler_menu;
     RecyclerView.LayoutManager layoutManager;
 
+    FirebaseRecyclerAdapter<Category,MenuViewHolder> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class Timeline extends AppCompatActivity {
 
     private void loadmenu() {
 
-        FirebaseRecyclerAdapter<Category,MenuViewHolder> adapter=new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class,R.layout.menu_item,MenuViewHolder.class,category) {
+        adapter=new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class,R.layout.menu_item,MenuViewHolder.class,category) {
              @Override
             protected void populateViewHolder(MenuViewHolder viewHolder, Category model, int position) {
 
@@ -72,7 +73,11 @@ public class Timeline extends AppCompatActivity {
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        Toast.makeText(Timeline.this,clickItem.getName(),Toast.LENGTH_SHORT).show();
+                        //get Category id and send to new activity
+                        Intent speciesIntent=new Intent(Timeline.this,SpeciesList.class);
+                        //since category id is key,so we want key
+                        speciesIntent.putExtra("CategoryId",adapter.getRef(position).getKey());
+                        startActivity(speciesIntent);
                     }
                 });
 
@@ -102,7 +107,7 @@ public class Timeline extends AppCompatActivity {
             case R.id.delete_account_of_species:
                 AlertDialog.Builder dialog=new AlertDialog.Builder(Timeline.this);
                 dialog.setTitle("Warning(deleting account)..");
-                dialog.setMessage("after deleteing your account..you cann't be able to login again"+"are you sure for deleting the account");
+                dialog.setMessage("after deleteing your account..you cann't be able to login again"+" are you sure for deleting the account");
                 dialog.setPositiveButton("delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
