@@ -81,6 +81,7 @@
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
+                    android:background="@color/lightgrey"
                     android:layout_height="wrap_content">
 
                     <TextView
@@ -96,17 +97,45 @@
                         />
 
 
-                    <Button
-                        android:layout_width="100dp"
-                        android:layout_height="30dp"
-                        android:id="@+id/preage"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginBottom="18dp"
-                        android:textSize="8sp"
-                        android:text="EARLY AGE"
-                        android:background="@color/darkergreen"
-                        android:textColor="@color/whitecolor"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:layout_width="100dp"
+                            android:layout_height="30dp"
+                            android:id="@+id/preage"
+                            android:textSize="12sp"
+                            android:text="EARLY AGE"
+                            android:layout_weight="1"
+                            android:layout_margin="6dp"
+                            android:background="@color/darkergreen"
+                            android:textColor="@color/whitecolor"/>
+
+                        <Button
+                            android:layout_width="100dp"
+                            android:layout_height="30dp"
+                            android:id="@+id/middleage"
+                            android:textSize="12sp"
+                            android:layout_weight="1"
+                            android:layout_margin="6dp"
+                            android:text="MIDDLE AGE"
+                            android:background="@color/darkergreen"
+                            android:textColor="@color/whitecolor"/>
+
+                        <Button
+                            android:layout_width="100dp"
+                            android:layout_height="30dp"
+                            android:id="@+id/recentage"
+                            android:layout_margin="6dp"
+                            android:textSize="12sp"
+                            android:layout_weight="1"
+                            android:text="RECENT AGE"
+                            android:background="@color/darkergreen"
+                            android:textColor="@color/whitecolor"/>
+
+                    </LinearLayout>
 
 
 
@@ -131,6 +160,7 @@
                     android:textColor="#000"
                     android:textSize="12sp"
                     android:textStyle="bold"
+                    android:backgroundTint="@color/lightgrey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 

@@ -1,16 +1,19 @@
 package com.example.ravi.species;
 
 public class Species {
-    private String Name,Image,Description,MenuId;
+    private String Name,Image,Description,MenuId,Preage,middleage,recentage;
 
     public Species() {
     }
 
-    public Species(String name, String image, String description, String menuId) {
+    public Species(String name, String image, String description, String menuId, String preage, String middleage, String recentage) {
         Name = name;
         Image = image;
         Description = description;
         MenuId = menuId;
+        Preage = preage;
+        this.middleage = middleage;
+        this.recentage = recentage;
     }
 
     public String getName() {
@@ -43,5 +46,29 @@ public class Species {
 
     public void setMenuId(String menuId) {
         MenuId = menuId;
+    }
+
+    public String getPreage() {
+        return Preage;
+    }
+
+    public void setPreage(String preage) {
+        Preage = preage;
+    }
+
+    public String getMiddleage() {
+        return middleage;
+    }
+
+    public void setMiddleage(String middleage) {
+        this.middleage = middleage;
+    }
+
+    public String getRecentage() {
+        return recentage;
+    }
+
+    public void setRecentage(String recentage) {
+        this.recentage = recentage;
     }
 }

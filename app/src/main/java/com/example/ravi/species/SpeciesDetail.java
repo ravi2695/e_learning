@@ -4,6 +4,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,7 +22,7 @@ public class SpeciesDetail extends AppCompatActivity {
     ImageView species_image;
     CollapsingToolbarLayout collapsingToolbarLayout;
     FloatingActionButton btnplay;
-    Button earlyAge;
+    Button earlyAge,mideavalperiod,recentlyage;
 
     String speciesId="";
 
@@ -38,6 +39,8 @@ public class SpeciesDetail extends AppCompatActivity {
 
         btnplay=(FloatingActionButton) findViewById(R.id.btnplay);
         earlyAge=findViewById(R.id.preage);
+        mideavalperiod=findViewById(R.id.middleage);
+        recentlyage=findViewById(R.id.recentage);
         species_description=findViewById(R.id.species_description);
         species_name=findViewById(R.id.species_name);
         species_image=findViewById(R.id.img_species);
@@ -63,13 +66,35 @@ public class SpeciesDetail extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                Species species=dataSnapshot.getValue(Species.class);
+                final Species species=dataSnapshot.getValue(Species.class);
                 Picasso.with(getBaseContext()).load(species.getImage())
                         .into(species_image);
 
                 collapsingToolbarLayout.setTitle(species.getName());
                 species_name.setText(species.getName());
                 species_description.setText(species.getDescription());
+
+                earlyAge.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        species_description.setText(species.getPreage());
+                    }
+                });
+
+                mideavalperiod.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        species_description.setText(species.getMiddleage());
+                    }
+                });
+
+                recentlyage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        species_description.setText(species.getRecentage());
+                    }
+                });
+
             }
 
             @Override
