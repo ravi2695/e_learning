@@ -23,7 +23,8 @@
         <activity
             android:name=".Timeline"
             android:screenOrientation="portrait" />
-        <activity android:name=".SpeciesList"></activity>
+        <activity android:name=".SpeciesList" />
+        <activity android:name=".SpeciesDetail"></activity>
     </application>
 
 </manifest>

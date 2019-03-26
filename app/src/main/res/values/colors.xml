@@ -6,5 +6,11 @@
     <color name="colorsky">#00bfff</color>
     <color name="lightgrey">#D3D3D3</color>
     <color name="darkgrey">#A9A9A9</color>
+    <color name="darkgreen">#065535</color>
+    <color name="mitticolor">#658138</color>
+    <color name="darkergreen">#283316</color>
+    <color name="othergreen">#1e6649</color>
+    <color name="whitecolor">#FFFFFF</color>
+
 
 </resources>

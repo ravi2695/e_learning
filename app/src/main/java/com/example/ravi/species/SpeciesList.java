@@ -1,5 +1,6 @@
 package com.example.ravi.species;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -63,7 +64,9 @@ public class SpeciesList extends AppCompatActivity {
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        Toast.makeText(SpeciesList.this,""+local.getName(),Toast.LENGTH_SHORT).show();
+                       Intent speciesDetails=new Intent(SpeciesList.this,SpeciesDetail.class);
+                       speciesDetails.putExtra("SpeciesId",adapter.getRef(position).getKey());
+                       startActivity(speciesDetails);
                     }
                 });
             }
