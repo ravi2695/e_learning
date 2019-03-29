@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.ravi.species.Common.Common;
 import com.example.ravi.species.Interface.ItemClickListener;
 import com.example.ravi.species.ViewHolder.MenuViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -55,8 +56,14 @@ public class Timeline extends AppCompatActivity {
         recycler_menu.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recycler_menu.setLayoutManager(layoutManager);
-        
-        loadmenu();
+
+        if(Common.isConnectedToInternet(this))
+            loadmenu();
+        else
+        {
+            Toast.makeText(this,"PLEASE CHECK YOUR INTERNET CONNECTION",Toast.LENGTH_LONG).show();
+            return;
+        }
     }
 
     private void loadmenu() {

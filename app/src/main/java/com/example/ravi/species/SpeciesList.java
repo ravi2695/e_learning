@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.ravi.species.Common.Common;
 import com.example.ravi.species.Interface.ItemClickListener;
 import com.example.ravi.species.ViewHolder.SpeciesViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -47,7 +48,13 @@ public class SpeciesList extends AppCompatActivity {
         }
         if(!categoryId.isEmpty()&&categoryId!=null)
         {
-            loadListSpecies(categoryId);
+            if(Common.isConnectedToInternet(getBaseContext()))
+                loadListSpecies(categoryId);
+            else
+            {
+                Toast.makeText(SpeciesList.this,"PLEASE CHECK YOUR INTERNET CONNECTION",Toast.LENGTH_LONG).show();
+                return;
+            }
         }
     }
 

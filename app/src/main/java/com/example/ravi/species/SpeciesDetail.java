@@ -1,5 +1,6 @@
 package com.example.ravi.species;
 
+import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.ravi.species.Common.Common;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,16 +58,24 @@ public class SpeciesDetail extends AppCompatActivity {
 
         if(!speciesId.isEmpty())
         {
-            getDetailFood(speciesId);
+            if(Common.isConnectedToInternet(getBaseContext()))
+                getDetailSpecies(speciesId);
+            else
+            {
+                Toast.makeText(SpeciesDetail.this,"PLEASE CHECK YOUR INTERNET CONNECTION",Toast.LENGTH_LONG).show();
+                return;
+            }
         }
 
     }
 
-    private void getDetailFood(String speciesId) {
+    private void getDetailSpecies(String speciesId) {
 
         species.child(speciesId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+
 
                 final Species species=dataSnapshot.getValue(Species.class);
                 Picasso.with(getBaseContext()).load(species.getImage())
@@ -92,6 +103,15 @@ public class SpeciesDetail extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         species_description.setText(species.getRecentage());
+                    }
+                });
+
+                btnplay.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent=new Intent(SpeciesDetail.this,speciesVideo.class);
+                        intent.putExtra("message",species.getVideoPlay().toString());
+                        startActivity(intent);
                     }
                 });
 

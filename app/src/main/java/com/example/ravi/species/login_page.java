@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ravi.species.Common.Common;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -57,14 +58,16 @@ public class login_page extends AppCompatActivity implements forgetPasswordDialo
             loginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(loginEmail.getText().toString().trim().isEmpty())
+
+                    if (Common.isConnectedToInternet(getBaseContext()))
                     {
+
+                    if (loginEmail.getText().toString().trim().isEmpty()) {
                         loginEmail.setError("this field is required");
                         loginEmail.requestFocus();
                         return;
                     }
-                    if(loginPassword.getText().toString().trim().isEmpty())
-                    {
+                    if (loginPassword.getText().toString().trim().isEmpty()) {
                         loginPassword.setError("this field is required");
                         loginPassword.requestFocus();
                         return;
@@ -72,30 +75,31 @@ public class login_page extends AppCompatActivity implements forgetPasswordDialo
 
                     loginProgressbar.setVisibility(View.VISIBLE);
 
-                    loginFirebaseAuth.signInWithEmailAndPassword(loginEmail.getText().toString().trim(),loginPassword.getText()
+                    loginFirebaseAuth.signInWithEmailAndPassword(loginEmail.getText().toString().trim(), loginPassword.getText()
                             .toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
                             loginProgressbar.setVisibility(View.GONE);
-                            if(task.isSuccessful())
-                            {
-                                if(loginFirebaseAuth.getCurrentUser().isEmailVerified())
-                                {
-                                    startActivity(new Intent(login_page.this,Timeline.class));
+                            if (task.isSuccessful()) {
+                                if (loginFirebaseAuth.getCurrentUser().isEmailVerified()) {
+                                    startActivity(new Intent(login_page.this, Timeline.class));
+                                } else {
+                                    Toast.makeText(login_page.this, "please verify your email or try with different account", Toast.LENGTH_LONG).show();
                                 }
-                                else
-                                {
-                                    Toast.makeText(login_page.this,"please verify your email or try with different account",Toast.LENGTH_LONG).show();
-                                }
-                            }
-                            else
-                            {
-                                Toast.makeText(login_page.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(login_page.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                             }
                         }
                     });
                 }
+                else
+                    {
+                        Toast.makeText(login_page.this,"PLEASE CHECK YOUR INTERNET CONNECTION",Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
+            }
             });
 
     }

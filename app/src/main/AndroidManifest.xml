@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ravi.species">
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".sameActivity"
@@ -24,7 +25,8 @@
             android:name=".Timeline"
             android:screenOrientation="portrait" />
         <activity android:name=".SpeciesList" />
-        <activity android:name=".SpeciesDetail"></activity>
+        <activity android:name=".SpeciesDetail" />
+        <activity android:name=".speciesVideo"></activity>
     </application>
 
 </manifest>
